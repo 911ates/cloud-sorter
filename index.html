@@ -1,0 +1,63 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Cloud Sorting Protocol</title>
+  <style>
+    body { font-family: Arial, text-align: center; padding: 20px; background-color: #f4f4f4; }
+    .result { font-size: 1.5em; font-weight: bold; margin-top: 20px; }
+    form { background: white; padding: 20px; border-radius: 10px; display: inline-block; }
+  </style>
+</head>
+<body>
+  <h1>Cloud Sorting Protocol</h1>
+  <p>"Ahh… another provider seeks their forecast."</p>
+
+  <form id="cloudForm">
+    <p>1. What’s your first thought when tones drop mid-meal?</p>
+    <label><input type="radio" name="q1" value="A"> A. Just opened the foil...</label><br>
+    <label><input type="radio" name="q1" value="B"> B. Let’s see what we’ve got.</label><br>
+    <label><input type="radio" name="q1" value="C"> C. Again? I just got back.</label><br><br>
+
+    <p>2. Another call hits as you pull into the ER?</p>
+    <label><input type="radio" name="q2" value="A"> A. Is Mercury in retrograde?</label><br>
+    <label><input type="radio" name="q2" value="B"> B. Break’ll have to wait.</label><br>
+    <label><input type="radio" name="q2" value="C"> C. Let’s roll.</label><br><br>
+
+    <p>3. How many calls in a 12-hour shift?</p>
+    <label><input type="radio" name="q3" value="A"> A. 10+, half are crazy.</label><br>
+    <label><input type="radio" name="q3" value="B"> B. 5–7, healthy mix.</label><br>
+    <label><input type="radio" name="q3" value="C"> C. 2–4, maybe a nap.</label><br><br>
+
+    <button type="button" onclick="sortCloud()">Get Your Cloud!</button>
+  </form>
+
+  <div class="result" id="result"></div>
+
+  <script>
+    function sortCloud() {
+      const q1 = document.querySelector('input[name="q1"]:checked')?.value;
+      const q2 = document.querySelector('input[name="q2"]:checked')?.value;
+      const q3 = document.querySelector('input[name="q3"]:checked')?.value;
+
+      if (!q1 || !q2 || !q3) {
+        document.getElementById("result").innerText = "Answer all questions, cadet!";
+        return;
+      }
+
+      const score = [q1, q2, q3].reduce((acc, val) => {
+        if (val === 'A') return acc + 3;
+        if (val === 'B') return acc + 2;
+        return acc + 1;
+      }, 0);
+
+      let cloud = "";
+      if (score >= 8) cloud = "Black Cloud";
+      else if (score >= 5) cloud = "Gray Cloud";
+      else cloud = "White Cloud";
+
+      document.getElementById("result").innerText = `"Ahh… yes. I see it now... You are a ${cloud}!"`;
+    }
+  </script>
+</body>
+</html>
