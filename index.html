@@ -5,8 +5,9 @@
   <title>Cloud Sorting Protocol</title>
   <style>
     body { font-family: Arial, text-align: center; padding: 20px; background-color: #f4f4f4; }
-    .result { font-size: 1.5em; font-weight: bold; margin-top: 20px; }
+    .result { font-size: 1.5em; font-weight: bold; margin-top: 20px; white-space: pre-line; }
     form { background: white; padding: 20px; border-radius: 10px; display: inline-block; }
+    .crest { margin-top: 20px; max-width: 300px; }
   </style>
 </head>
 <body>
@@ -14,6 +15,19 @@
   <p>"Ahh… another provider seeks their forecast."</p>
 
   <form id="cloudForm">
+    <h3>Bonus Fun Questions</h3>
+    <p>What’s your pre-shift ritual?</p>
+    <label><input type="radio" name="bonus1"> A. I bless my stethoscope and pray for a quiet shift.</label><br>
+    <label><input type="radio" name="bonus1"> B. Caffeine. Lots of it. Then more.</label><br>
+    <label><input type="radio" name="bonus1"> C. I casually mention it’ll be a slow day—just to tempt fate.</label><br>
+    <label><input type="radio" name="bonus1"> D. I light a candle. It’s scented ‘Trauma Bay’.</label><br><br>
+
+    <p>Pick your emergency call soundtrack:</p>
+    <label><input type="radio" name="bonus2"> A. DMX – “X Gon’ Give It to Ya”</label><br>
+    <label><input type="radio" name="bonus2"> B. Eye of the Tiger</label><br>
+    <label><input type="radio" name="bonus2"> C. The sound of silence... literally</label><br>
+    <label><input type="radio" name="bonus2"> D. Let It Go</label><br><br>
+
     <p>1. What’s your first thought when tones drop mid-meal?</p>
     <label><input type="radio" name="q1" value="A"> A. Just opened the foil...</label><br>
     <label><input type="radio" name="q1" value="B"> B. Let’s see what we’ve got.</label><br>
@@ -33,6 +47,7 @@
   </form>
 
   <div class="result" id="result"></div>
+  <img id="crestImage" class="crest" style="display:none;" />
 
   <script>
     function sortCloud() {
@@ -42,6 +57,7 @@
 
       if (!q1 || !q2 || !q3) {
         document.getElementById("result").innerText = "Answer all questions, cadet!";
+        document.getElementById("crestImage").style.display = "none";
         return;
       }
 
@@ -52,11 +68,27 @@
       }, 0);
 
       let cloud = "";
-      if (score >= 8) cloud = "Black Cloud";
-      else if (score >= 5) cloud = "Gray Cloud";
-      else cloud = "White Cloud";
+      let house = "";
+      let imagePath = "";
 
-      document.getElementById("result").innerText = `"Ahh… yes. I see it now... You are a ${cloud}!"`;
+      if (score >= 8) {
+        cloud = "Black Cloud";
+        house = "House Nocturnis – 'We thrive where others stall.'";
+        imagePath = "images/nocturnis.png";
+      } else if (score >= 5) {
+        cloud = "Gray Cloud";
+        house = "House Tempestria – 'Every shift, we stand ready.'";
+        imagePath = "images/tempestria.png";
+      } else {
+        cloud = "White Cloud";
+        house = "House Aetherwind – 'Grace in every moment.'";
+        imagePath = "images/aetherwind.png";
+      }
+
+      document.getElementById("result").innerText = "Ahh… yes. I see it now... You are a " + cloud + "!\n" + house;
+      const crest = document.getElementById("crestImage");
+      crest.src = imagePath;
+      crest.style.display = "block";
     }
   </script>
 </body>
